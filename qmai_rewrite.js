@@ -21,6 +21,7 @@ try {
         obj.data.customerCenterCardLevelInfo.level = 5;
         obj.data.customerCenterCardLevelInfo.cardName = "黑金匠";
         obj.data.customerCenterCardLevelInfo.currentValue = "12873.56";
+        obj.data.customerCenterCardLevelInfo.max = true;
     }
 
     // Rule 2: Modify Points
@@ -28,6 +29,7 @@ try {
     if (url.indexOf("/web/account-center/crm/query-person-asset") !== -1) {
         if (obj && obj.data) {
             obj.data.pointNum = 11;
+            obj.data.litMinorIcon = "https://images.qmai.cn/s207718/2024/12/19/1f2ca4f2d131acc8cb.png";
         }
     }
 
