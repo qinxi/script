@@ -2,6 +2,7 @@
 // Duolingo Unlimited Hearts + Max
 // Quantumult X script-response-body
 // Match: /YYYY-MM-DD/users/
+// author: https://github.com/eztakesin/duolingo-mitm-lab/blob/main/duolingo_unlimited_hearts_max.js
 
 'use strict';
 
