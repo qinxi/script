@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "name": "Duolingo Unlimited Hearts & Max",
+      "enabled": true,
+      "autoRun": true,
+      "whens": [
+        {
+          "@class": ".WhenMatchesText",
+          "negate": false,
+          "useOrCondition": false,
+          "identifier": "",
+          "identifierPlacement": "Last",
+          "sourceText": "",
+          "matchText": "https://.*\\.duolingo\\.[^/]+/[0-9]{4}-[0-9]{2}-[0-9]{2}/users/.*",
+          "messageValue": "Url",
+          "messageValueType": "Text",
+          "messageValuePath": "",
+          "matchType": "Regex",
+          "ignoreCase": false,
+          "useMessageValue": true
+        }
+      ],
+      "thens": [
+        {
+          "@class": ".ThenSetValue",
+          "useMessageValue": false,
+          "sourceMessageValue": "SourceAddress",
+          "sourceIdentifier": "",
+          "sourceIdentifierPlacement": "Last",
+          "sourceMessageValueType": "Text",
+          "sourceMessageValuePath": "",
+          "useReplace": false,
+          "regexPattern": "",
+          "text": "true",
+          "replacementText": "",
+          "destinationMessageValueType": "Json",
+          "destinationMessageValuePath": "$.health.unlimitedHeartsAvailable",
+          "destinationMessageValue": "HttpResponseBody",
+          "destinationIdentifier": "",
+          "destinationIdentifierPlacement": "Only"
+        },
+        {
+          "@class": ".ThenSetValue",
+          "useMessageValue": false,
+          "sourceMessageValue": "SourceAddress",
+          "sourceIdentifier": "",
+          "sourceIdentifierPlacement": "Last",
+          "sourceMessageValueType": "Text",
+          "sourceMessageValuePath": "",
+          "useReplace": false,
+          "regexPattern": "",
+          "text": "true",
+          "replacementText": "",
+          "destinationMessageValueType": "Json",
+          "destinationMessageValuePath": "$.hasPlus",
+          "destinationMessageValue": "HttpResponseBody",
+          "destinationIdentifier": "",
+          "destinationIdentifierPlacement": "Only"
+        },
+        {
+          "@class": ".ThenSetValue",
+          "useMessageValue": false,
+          "sourceMessageValue": "SourceAddress",
+          "sourceIdentifier": "",
+          "sourceIdentifierPlacement": "Last",
+          "sourceMessageValueType": "Text",
+          "sourceMessageValuePath": "",
+          "useReplace": false,
+          "regexPattern": "",
+          "text": "true",
+          "replacementText": "",
+          "destinationMessageValueType": "Json",
+          "destinationMessageValuePath": "$.trackingProperties.has_item_gold_subscription",
+          "destinationMessageValue": "HttpResponseBody",
+          "destinationIdentifier": "",
+          "destinationIdentifierPlacement": "Only"
+        },
+        {
+          "@class": ".ThenSetValue",
+          "useMessageValue": false,
+          "sourceMessageValue": "SourceAddress",
+          "sourceIdentifier": "",
+          "sourceIdentifierPlacement": "Last",
+          "sourceMessageValueType": "Text",
+          "sourceMessageValuePath": "",
+          "useReplace": false,
+          "regexPattern": "",
+          "text": "{\"itemName\":\"gold_subscription\",\"subscriptionInfo\":{\"vendor\":\"STRIPE\",\"renewing\":true,\"isFamilyPlan\":true,\"expectedExpiration\":9999999999000}}",
+          "replacementText": "",
+          "destinationMessageValueType": "Json",
+          "destinationMessageValuePath": "$.shopItems.gold_subscription",
+          "destinationMessageValue": "HttpResponseBody",
+          "destinationIdentifier": "",
+          "destinationIdentifierPlacement": "Only"
+        }
+      ]
+    }
+  ],
+  "webSocketRules": [],
+  "variables": []
+}
+
