@@ -212,7 +212,7 @@ async function main() {
     let headers = formatHeaders($request.headers);
 
     // 修改 Accept-Encoding 以获取未压缩的响应
-    headers['accept-encoding'] = 'identity';
+    headers['accept-encoding'] = 'gzip, deflate';
     delete headers['content-length'];
 
     let url = $request.url;
