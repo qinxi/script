@@ -71,28 +71,28 @@ function modifyUserData(bodyData) {
     let modified = false;
 
     // 1. 修改 subscriberLevel: FREE -> PREMIUM
-    if (bodyData.subscriberLevel === "FREE") {
-        bodyData.subscriberLevel = "PREMIUM";
-        modified = true;
-    }
+
+    bodyData.subscriberLevel = "PREMIUM";
+    bodyData.hasPlus = true;
+    modified = true;
+
 
     // 2. 添加订阅配置 (如果为空)
-    if (!bodyData.subscriptionConfigs || bodyData.subscriptionConfigs.length === 0) {
-        let futureExpiration = Date.now() + (7 * 24 * 60 * 60 * 1000);
-        bodyData.subscriptionConfigs = [{
-            "vendorPurchaseId": "mock_purchase_" + Date.now(),
-            "isInBillingRetryPeriod": false,
-            "isInGracePeriod": false,
-            "pauseStart": null,
-            "pauseEnd": null,
-            "productId": "com.duolingo.DuolingoMobile.subscription.Premium.TwelveMonth",
-            "receiptSource": 1,
-            "expirationTimestamp": futureExpiration,
-            "isFreeTrialPeriod": true,
-            "itemType": "premium_subscription"
-        }];
-        modified = true;
-    }
+
+    let futureExpiration = Date.now() + (400 * 24 * 60 * 60 * 1000);
+    bodyData.subscriptionConfigs = [{
+        "vendorPurchaseId": "mock_purchase_" + Date.now(),
+        "isInBillingRetryPeriod": false,
+        "isInGracePeriod": false,
+        "pauseStart": null,
+        "pauseEnd": null,
+        "productId": "com.duolingo.DuolingoMobile.subscription.Gold.TwelveMonth.25Q3IncMS87D.Trial7.240",
+        "receiptSource": 1,
+        "expirationTimestamp": futureExpiration,
+        "isFreeTrialPeriod": false,
+        "itemType": "gold_subscription"
+    }];
+
 
     // 3. 清空广告配置
     if (bodyData.adsConfig && bodyData.adsConfig.units &&
@@ -103,10 +103,9 @@ function modifyUserData(bodyData) {
 
     // 4. 修改 trackingProperties
     if (bodyData.trackingProperties) {
-        if (bodyData.trackingProperties.has_item_premium_subscription === false) {
-            bodyData.trackingProperties.has_item_premium_subscription = true;
-            modified = true;
-        }
+        bodyData.trackingProperties.has_item_gold_subscription = true;
+        modified = true;
+
         if (bodyData.trackingProperties.monetizable_status === "free_trial_eligible") {
             bodyData.trackingProperties.monetizable_status = "free_trial_owner_super";
             modified = true;
@@ -115,33 +114,33 @@ function modifyUserData(bodyData) {
 
     // 5. 添加 premium_subscription 到 shopItems
     if (bodyData.shopItems && Array.isArray(bodyData.shopItems)) {
-        let hasPremium = bodyData.shopItems.some(item =>
-            item.id === "premium_subscription" || item.itemName === "premium_subscription"
+        let hasGold = bodyData.shopItems.some(item =>
+            item.id === "gold_subscription" || item.itemName === "gold_subscription"
         );
 
-        if (!hasPremium) {
-            let futureExp = Date.now() + (7 * 24 * 60 * 60 * 1000);
+        if (!hasGold) {
+            let futureExp = Date.now() + (400 * 24 * 60 * 60 * 1000);
             let futureExpSec = Math.floor(futureExp / 1000);
 
             bodyData.shopItems.push({
-                "purchaseId": "mock_premium_" + Date.now(),
+                "purchaseId": "mock_gold_" + Date.now(),
                 "purchaseDate": Math.floor(Date.now() / 1000),
                 "purchasePrice": 0,
-                "id": "premium_subscription",
-                "itemName": "premium_subscription",
+                "id": "gold_subscription",
+                "itemName": "gold_subscription",
                 "subscriptionInfo": {
                     "currency": "USD",
                     "expectedExpiration": futureExpSec,
-                    "isFreeTrialPeriod": true,
+                    "isFreeTrialPeriod": false,
                     "isIntroOfferPeriod": false,
                     "isInBillingRetryPeriod": false,
                     "periodLength": 12,
                     "price": 0,
-                    "productId": "com.duolingo.DuolingoMobile.subscription.Premium.TwelveMonth",
+                    "productId": "com.duolingo.DuolingoMobile.subscription.Gold.TwelveMonth.25Q3IncMS87D.Trial7.240",
                     "renewer": "APPLE",
                     "renewing": false,
                     "tier": "twelve_month",
-                    "type": "premium",
+                    "type": "gold",
                     "vendorPurchaseId": "mock_vendor_" + Date.now(),
                     "promotionalOfferId": "",
                     "firstPaymentDate": 0
