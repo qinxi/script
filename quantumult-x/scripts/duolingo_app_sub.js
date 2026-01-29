@@ -26,6 +26,7 @@ const env = ENV();
 function httpRequest(options) {
     return new Promise((resolve, reject) => {
         if (env.isQX) {
+            console.log(`[${scriptName}] ${options.method} request to: ${options.url}, ${version}`);
             $task.fetch(options).then(
                 response => resolve({
                     status: response.statusCode,
@@ -72,7 +73,7 @@ function modifyUserData(bodyData) {
 
     // 1. 修改 subscriberLevel: FREE -> PREMIUM
 
-    bodyData.subscriberLevel = "PREMIUM";
+    bodyData.subscriberLevel = "GOLD";
     bodyData.hasPlus = true;
     modified = true;
 
@@ -255,7 +256,7 @@ async function main() {
             $done({ response: result });
         }
     } catch (error) {
-        console.log(`[${scriptName}] Request error: ${error}`);
+        console.log(`[${scriptName}] Request error: ${error}, url: ${options.url}`);
         $done({});
     }
 }
