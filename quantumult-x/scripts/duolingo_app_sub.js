@@ -26,7 +26,6 @@ const env = ENV();
 function httpRequest(options) {
     return new Promise((resolve, reject) => {
         if (env.isQX) {
-            console.log(`[${scriptName}] ${options.method} request to: ${options.url}, ${version}`);
             $task.fetch(options).then(
                 response => resolve({
                     status: response.statusCode,
@@ -216,8 +215,11 @@ async function main() {
     headers['accept-encoding'] = 'identity';
     delete headers['content-length'];
 
+    let url = $request.url;
+    url += (url.includes('?') ? '&' : '?') + '__qx_internal=1';
+
     const options = {
-        url: $request.url,
+        url: url,
         method: $request.method,
         headers: headers,
         body: $request.body,
