@@ -41,6 +41,7 @@ if (data && typeof data === 'object') {
 
     // Plus / Max
     data.hasPlus = true;
+    data.subscriberLevel = "GOLD"
 
     if (!data.trackingProperties || typeof data.trackingProperties !== 'object') {
         data.trackingProperties = {};
